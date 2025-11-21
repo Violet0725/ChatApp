@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("https://erics-chat-backend.onrender.com");
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
