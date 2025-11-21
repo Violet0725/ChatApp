@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const http = require("http");
@@ -11,7 +12,7 @@ app.use(cors({
 }));
 
 // 1. DB CONNECTION
-mongoose.connect("mongodb+srv://eric:79258279a@cluster0.6g7pkew.mongodb.net/chatdb?retryWrites=true&w=majority")
+mongoose.connect(process.env.MONGO_URL) // <--- This reads from the .env file
   .then(async () => {
     console.log("MONGODB CONNECTED");
     const existing = await Channel.findOne({ name: "general" });
