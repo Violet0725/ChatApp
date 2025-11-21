@@ -1,6 +1,5 @@
 # 💬 Real-Time Chat Application (Discord Clone)
 
-![Project Screenshot]
 <img width="1900" height="921" alt="image" src="https://github.com/user-attachments/assets/1c3b7ed3-bcc3-431a-8960-8c58192dad1d" />
 
 ## 🚀 Live Demo
@@ -91,5 +90,5 @@ Follow these steps to run the project on your local machine.
 
 **Eric Zhou**
 * Computing Student @ Queen's University
-* [LinkedIn](https://www.linkedin.com/) *(Add your link here)*
+* [LinkedIn](https://www.linkedin.com/in/ericzhou040725/) 
 * [Portfolio](https://violet0725.github.io/my-portfolio/)
