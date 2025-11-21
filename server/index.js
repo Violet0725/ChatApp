@@ -6,7 +6,8 @@ const mongoose = require("mongoose");
 const { Server } = require("socket.io");
 
 app.use(cors({
-  origin: ["http://localhost:5173", "eric-chat-app.vercel.app"]
+  origin: ["http://localhost:5173", "https://eric-chat-app.vercel.app"],
+  methods: ["GET", "POST"]
 }));
 
 // 1. DB CONNECTION
@@ -30,7 +31,11 @@ const Message = mongoose.model("Message", messageSchema);
 
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: "eric-chat-app.vercel.app", methods: ["GET", "POST"] },
+  cors: {
+    // MAKE SURE THERE IS NO SLASH "/" AT THE END OF THE URL!
+    origin: ["http://localhost:5173", "https://eric-chat-app.vercel.app"],
+    methods: ["GET", "POST"],
+  },
 });
 
 // ---------------------------------------------------------
