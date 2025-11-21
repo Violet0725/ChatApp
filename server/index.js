@@ -5,7 +5,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const { Server } = require("socket.io");
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "eric-chat-app.vercel.app"]
+}));
 
 // 1. DB CONNECTION
 mongoose.connect("mongodb+srv://eric:79258279a@cluster0.6g7pkew.mongodb.net/chatdb?retryWrites=true&w=majority")
@@ -28,7 +30,7 @@ const Message = mongoose.model("Message", messageSchema);
 
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: "http://localhost:5173", methods: ["GET", "POST"] },
+  cors: { origin: "eric-chat-app.vercel.app", methods: ["GET", "POST"] },
 });
 
 // ---------------------------------------------------------
