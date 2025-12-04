@@ -518,13 +518,25 @@ function App() {
                 {/* Render image if message contains image URL */}
                 {msg.message.startsWith('[Image:') ? (
                   <img src={(() => {
-                    const url = msg.message.match(/\[Image: (.+)\]/)?.[1] || '';
-                    return url.startsWith('/') ? `${API_URL}${url}` : url;
+                    let url = msg.message.match(/\[Image: (.+)\]/)?.[1] || '';
+                    // Fix old localhost URLs and relative URLs
+                    if (url.includes('127.0.0.1') || url.includes('localhost')) {
+                      url = url.replace(/https?:\/\/(127\.0\.0\.1|localhost):\d+/, API_URL);
+                    } else if (url.startsWith('/')) {
+                      url = `${API_URL}${url}`;
+                    }
+                    return url;
                   })()} alt="uploaded" className="max-w-xs rounded mt-1" />
                 ) : msg.message.startsWith('[File:') ? (
                   <a href={(() => {
-                    const url = msg.message.match(/\((.+)\)/)?.[1] || '';
-                    return url.startsWith('/') ? `${API_URL}${url}` : url;
+                    let url = msg.message.match(/\((.+)\)/)?.[1] || '';
+                    // Fix old localhost URLs and relative URLs
+                    if (url.includes('127.0.0.1') || url.includes('localhost')) {
+                      url = url.replace(/https?:\/\/(127\.0\.0\.1|localhost):\d+/, API_URL);
+                    } else if (url.startsWith('/')) {
+                      url = `${API_URL}${url}`;
+                    }
+                    return url;
                   })()} target="_blank" rel="noreferrer" className="text-discord_purple hover:underline">
                     📎 {msg.message.match(/\[File: (.+)\]/)?.[1]}
                   </a>
