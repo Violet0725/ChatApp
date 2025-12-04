@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 
-const API_URL = "http://127.0.0.1:3001";
+// Use environment variable or fallback to localhost for development
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:3001";
 const socket = io.connect(API_URL);
 
 function App() {
