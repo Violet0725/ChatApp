@@ -35,7 +35,7 @@ interface ChatState {
   reset: () => void;
 }
 
-export const useChatStore = create<ChatState>((set, get) => ({
+export const useChatStore = create<ChatState>((set, _get) => ({
   channels: [],
   currentChannel: DEFAULT_CHANNEL,
   messages: [],
