@@ -9,6 +9,12 @@ A full-stack real-time chat application built with modern technologies including
 ![Socket.io](https://img.shields.io/badge/Socket.io-010101?style=flat&logo=socketdotio&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 
+## Demo
+
+![Chat App Demo](./chat.gif)
+
+🔗 **Live Demo:** [https://eric-chat-app.vercel.app](https://eric-chat-app.vercel.app)
+
 ## Features
 
 ### Core Features
