@@ -1,0 +1,28 @@
+version: '3.8'
+
+# Development configuration - runs only MongoDB
+# Use this for local development with hot reloading
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: chat-mongodb-dev
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: chatapp
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_dev_data:/data/db
+    networks:
+      - chat-network-dev
+
+networks:
+  chat-network-dev:
+    driver: bridge
+
+volumes:
+  mongodb_dev_data:
+    driver: local

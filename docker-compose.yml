@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7
+    container_name: chat-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-password123}
+      MONGO_INITDB_DATABASE: chatapp
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - chat-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API Server
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: chat-server
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      MONGO_URL: mongodb://${MONGO_USERNAME:-admin}:${MONGO_PASSWORD:-password123}@mongodb:27017/chatapp?authSource=admin
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-your-super-secret-refresh-key}
+      CLIENT_URL: ${CLIENT_URL:-http://localhost}
+    ports:
+      - "3001:3001"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - chat-network
+
+  # Frontend Client
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: chat-client
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+    networks:
+      - chat-network
+
+networks:
+  chat-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
