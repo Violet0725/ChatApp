@@ -25,7 +25,4 @@ const channelSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-// Index for faster queries
-channelSchema.index({ name: 1 });
-
 module.exports = mongoose.model('Channel', channelSchema);
