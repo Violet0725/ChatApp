@@ -103,7 +103,7 @@ A full-stack real-time chat application built with modern technologies including
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/chat-app.git
+   git clone https://github.com/Violet0725/ChatApp.git
    cd chat-app
    ```
 

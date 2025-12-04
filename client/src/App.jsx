@@ -199,9 +199,10 @@ function App() {
       });
       const data = await res.json();
       if (data.success) {
+        // Store relative URL - will be resolved when displaying
         const fileMessage = file.type.startsWith("image/") 
-          ? `[Image: ${API_URL}${data.data.url}]`
-          : `[File: ${data.data.originalName}](${API_URL}${data.data.url})`;
+          ? `[Image: ${data.data.url}]`
+          : `[File: ${data.data.originalName}](${data.data.url})`;
         
         if (dmView) {
           socket.emit("send_dm", {
@@ -516,9 +517,15 @@ function App() {
                 </div>
                 {/* Render image if message contains image URL */}
                 {msg.message.startsWith('[Image:') ? (
-                  <img src={msg.message.match(/\[Image: (.+)\]/)?.[1]} alt="uploaded" className="max-w-xs rounded mt-1" />
+                  <img src={(() => {
+                    const url = msg.message.match(/\[Image: (.+)\]/)?.[1] || '';
+                    return url.startsWith('/') ? `${API_URL}${url}` : url;
+                  })()} alt="uploaded" className="max-w-xs rounded mt-1" />
                 ) : msg.message.startsWith('[File:') ? (
-                  <a href={msg.message.match(/\((.+)\)/)?.[1]} target="_blank" rel="noreferrer" className="text-discord_purple hover:underline">
+                  <a href={(() => {
+                    const url = msg.message.match(/\((.+)\)/)?.[1] || '';
+                    return url.startsWith('/') ? `${API_URL}${url}` : url;
+                  })()} target="_blank" rel="noreferrer" className="text-discord_purple hover:underline">
                     📎 {msg.message.match(/\[File: (.+)\]/)?.[1]}
                   </a>
                 ) : (
