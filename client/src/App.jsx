@@ -21,15 +21,12 @@ function App() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [authError, setAuthError] = useState("");
-  const [authToken, setAuthToken] = useState("");
   
   // New features state
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [showSearch, setShowSearch] = useState(false);
   const [dmView, setDmView] = useState(null); // { odName, odId, conversationId }
   const [dmMessages, setDmMessages] = useState([]);
-  const [conversations, setConversations] = useState([]);
   const [showEmojiPicker, setShowEmojiPicker] = useState(null); // messageId
   const [dmNotification, setDmNotification] = useState(null);
 
@@ -82,7 +79,6 @@ function App() {
       localStorage.setItem("chat_token", token);
       localStorage.setItem("chat_username", user.username);
       localStorage.setItem("chat_auth_mode", "full");
-      setAuthToken(token);
       setUserName(user.username);
       setIsLoggedIn(true);
       socket.emit("join_room", { room: "general", username: user.username });
@@ -107,7 +103,6 @@ function App() {
       localStorage.setItem("chat_token", token);
       localStorage.setItem("chat_username", user.username);
       localStorage.setItem("chat_auth_mode", "full");
-      setAuthToken(token);
       setUserName(user.username);
       setIsLoggedIn(true);
       socket.emit("join_room", { room: "general", username: user.username });
@@ -228,14 +223,12 @@ function App() {
 
   useEffect(() => {
     const savedName = localStorage.getItem("chat_username");
-    const savedToken = localStorage.getItem("chat_token");
     const savedAuthMode = localStorage.getItem("chat_auth_mode") || "simple";
     
     setAuthMode(savedAuthMode);
     
     if (savedName) {
       setUserName(savedName);
-      if (savedToken) setAuthToken(savedToken);
       setIsLoggedIn(true);
       socket.emit("join_room", { room: "general", username: savedName });
     }
@@ -286,8 +279,8 @@ function App() {
       setDmNotification(notification);
       setTimeout(() => setDmNotification(null), 5000);
     };
-    const handleConversationsList = (convos) => {
-      setConversations(convos);
+    const handleConversationsList = () => {
+      // Conversations list received (can be used for DM sidebar)
     };
 
     socket.on("receive_message", handleReceiveMessage);
@@ -315,7 +308,8 @@ function App() {
       socket.off("dm_notification", handleDmNotification);
       socket.off("conversations_list", handleConversationsList);
     };
-  }, [socket, userName]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userName]);
 
 
   if (!isLoggedIn) {
@@ -443,7 +437,6 @@ function App() {
                 localStorage.removeItem("chat_auth_mode"); 
                 setIsLoggedIn(false); 
                 setUserName(""); 
-                setAuthToken("");
                 setEmail("");
                 setPassword("");
             }} className="hover:bg-gray-700 p-2 rounded text-gray-400 hover:text-white transition">Log Out</button>

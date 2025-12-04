@@ -234,29 +234,10 @@ npm run test:watch
 npm run test:coverage
 ```
 
-## Interview Talking Points
-
-This project demonstrates:
-
-1. **Full-stack development** with modern JavaScript/TypeScript
-2. **Real-time systems** using WebSockets (Socket.io)
-3. **Authentication & Security** - JWT tokens, password hashing, input validation
-4. **State management** - Zustand for predictable client state
-5. **Database design** - MongoDB schemas with proper indexing
-6. **Code organization** - Clean architecture with separation of concerns
-7. **DevOps practices** - Docker, CI/CD, health checks
-8. **Type safety** - TypeScript for catch errors at compile time
-9. **File handling** - Multer for file uploads with type validation
-10. **Testing** - Jest unit tests for API endpoints and models
-
-## License
-
-MIT License - See [LICENSE](LICENSE) for details.
-
 ## Author
 
 **Eric Zhou**
 
 ---
 
-*Built with ❤️ using React, Node.js, and Socket.io*
+*Built with React, Node.js, and Socket.io*
